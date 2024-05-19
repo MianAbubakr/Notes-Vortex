@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2C2B4B"
+    android:background="@color/main_color"
     tools:context=".Welcome.Splash">
 
     <ImageView
@@ -14,6 +14,7 @@
         android:src="@drawable/splash_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -26,9 +27,10 @@
         android:fontFamily="@font/poppins_bold"
         android:text="@string/notes_vortex"
         android:textColor="@color/white"
-        android:textSize="@dimen/xXLargeTextSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/xXXLargeTextSize"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewLogo"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/imageViewLogo"
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
         tools:ignore="MissingConstraints" />
 

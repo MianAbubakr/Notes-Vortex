@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "228775464731",
+    "project_id": "notes-vortex",
+    "storage_bucket": "notes-vortex.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228775464731:android:1465074b54baccacdd0dbe",
+        "android_client_info": {
+          "package_name": "com.pl.notesvortex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA42FJ9uqxkUrUy1gKQrR_7T6LjgJfxlCw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
