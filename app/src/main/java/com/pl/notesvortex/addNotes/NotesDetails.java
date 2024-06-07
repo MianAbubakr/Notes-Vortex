@@ -63,6 +63,10 @@ public class NotesDetails extends AppCompatActivity {
     }
 
     private void setListener() {
+        binding.backIcon.setOnClickListener(v -> {
+            onBackPressed();
+        });
+
         binding.saveNoteIcon.setOnClickListener(v -> {
             saveNote();
         });

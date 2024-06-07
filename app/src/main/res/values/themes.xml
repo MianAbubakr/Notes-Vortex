@@ -8,4 +8,13 @@
     <style name="Theme.NotesVortex" parent="Base.Theme.NotesVortex">
         <item name="colorPrimaryDark">#2C2B4B</item>
     </style>
+
+    <style name="CustomDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowMinWidthMajor">80%</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item> <!-- Adjust the dim amount -->
+    </style>
 </resources>

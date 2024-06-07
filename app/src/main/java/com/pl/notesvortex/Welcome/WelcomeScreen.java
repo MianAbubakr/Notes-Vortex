@@ -21,7 +21,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
     private void setListener() {
         binding.include.getStartedButton.setOnClickListener(v -> {
-            Intent intent = new Intent(WelcomeScreen.this, CreateAccount.class);
+            Intent intent = new Intent(WelcomeScreen.this, Login.class);
             startActivity(intent);
             finish();
         });

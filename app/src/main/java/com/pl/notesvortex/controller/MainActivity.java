@@ -3,14 +3,19 @@ package com.pl.notesvortex.controller;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.Query;
+import com.pl.notesvortex.R;
 import com.pl.notesvortex.Utility;
 import com.pl.notesvortex.Welcome.Login;
 import com.pl.notesvortex.addNotes.NotesDetails;
@@ -42,18 +47,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        PopupMenu popupMenu = new PopupMenu(MainActivity.this, binding.logoutButton);
-        popupMenu.getMenu().add("Logout");
-        popupMenu.show();
-        popupMenu.setOnMenuItemClickListener(item -> {
-            if (item.getTitle().equals("Logout")) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, Login.class));
-                finish();
-                return true;
-            }
-            return false;
+        Dialog dialog = new Dialog(MainActivity.this, R.style.CustomDialog);
+        dialog.setContentView(R.layout.include_logout_dialog);
+
+        Button yes = dialog.findViewById(R.id.yesButton);
+        Button no = dialog.findViewById(R.id.noButton);
+
+        yes.setOnClickListener(v12 -> {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainActivity.this, Login.class));
+            finish();
         });
+
+        no.setOnClickListener(v1 -> dialog.dismiss());
+        dialog.show();
     }
 
     private void setupRecyclerView() {

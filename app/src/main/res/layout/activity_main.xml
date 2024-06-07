@@ -16,7 +16,7 @@
         android:fontFamily="@font/poppins_bold"
         android:text="Notes"
         android:textColor="@color/main_color"
-        android:textSize="@dimen/xXLargeTextSize"
+        android:textSize="@dimen/xXXLargeTextSize"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
@@ -46,10 +46,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/addNotesButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/add_button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

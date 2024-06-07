@@ -7,16 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".addNotes.NotesDetails">
 
+    <ImageView
+        android:id="@+id/backIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:padding="10dp"
+        android:src="@drawable/back_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/pageTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pageTitle"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/pageTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/add_new_note"
         android:textColor="@color/main_color"
         android:textSize="@dimen/xLargeTextSize"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -27,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:src="@drawable/tick_icon"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/pageTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/pageTitle"
@@ -35,11 +48,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/started_buton_bg"
+        app:layout_constraintBottom_toTopOf="@+id/deleteNoteButton"
         app:layout_constraintEnd_toEndOf="@+id/saveNoteIcon"
-        app:layout_constraintStart_toStartOf="@+id/pageTitle"
+        app:layout_constraintStart_toStartOf="@+id/backIcon"
         app:layout_constraintTop_toBottomOf="@+id/pageTitle">
 
         <EditText
@@ -75,8 +90,9 @@
         <EditText
             android:id="@+id/contentET"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:fontFamily="@font/poppins_regular"
             android:gravity="top"
@@ -87,6 +103,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/hint_color"
             android:textSize="@dimen/normalTextSize"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/titleET"
             app:layout_constraintStart_toStartOf="@+id/titleET"
             app:layout_constraintTop_toBottomOf="@+id/view"

@@ -23,4 +23,8 @@
     <string name="title">Title</string>
     <string name="content">Content</string>
     <string name="delete_note">Delete Note</string>
+    <string name="logout">Logout</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="do_you_really_want_to_n_logout">Do You Really Want To \n Logout ?</string>
 </resources>
