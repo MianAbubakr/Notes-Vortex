@@ -1,6 +1,7 @@
 package com.pl.notesvortex.controller.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
 import com.pl.notesvortex.R;
+import com.pl.notesvortex.addNotes.NotesDetails;
 import com.pl.notesvortex.addNotes.model.NoteModel;
 
 import java.text.SimpleDateFormat;
@@ -36,6 +38,15 @@ public class NotesAdapter extends FirestoreRecyclerAdapter<NoteModel, NotesAdapt
         SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
         String formattedDate = outputFormat.format(date);
         holder.timeStampTextView.setText(formattedDate);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, NotesDetails.class);
+            intent.putExtra("title", noteModel.getTitle());
+            intent.putExtra("content", noteModel.getContent());
+            String docId = this.getSnapshots().getSnapshot(position).getId();
+            intent.putExtra("docId", docId);
+            context.startActivity(intent);
+        });
     }
 
     @NonNull

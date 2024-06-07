@@ -27,6 +27,8 @@ import com.pl.notesvortex.databinding.ActivityNotesDetailsBinding;
 public class NotesDetails extends AppCompatActivity {
     ActivityNotesDetailsBinding binding;
     DocumentReference documentReference;
+    String title, content, docId;
+    boolean isEditMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +41,41 @@ public class NotesDetails extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        getIntentData();
         setListener();
+    }
+
+    private void getIntentData() {
+        title = getIntent().getStringExtra("title");
+        content = getIntent().getStringExtra("content");
+        docId = getIntent().getStringExtra("docId");
+
+        if (docId != null && !docId.isEmpty()) {
+            isEditMode = true;
+        }
+
+        binding.titleET.setText(title);
+        binding.contentET.setText(content);
+        if (isEditMode) {
+            binding.pageTitle.setText("Edit Your Note");
+            binding.deleteNoteButton.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setListener() {
         binding.saveNoteIcon.setOnClickListener(v -> {
             saveNote();
         });
+
+        binding.deleteNoteButton.setOnClickListener(v -> {
+            deleteNoteFromFirebase();
+        });
     }
 
     private void saveNote() {
         String noteTitle = binding.titleET.getText().toString();
         String noteContent = binding.contentET.getText().toString();
-        if (noteTitle == null || noteTitle.isEmpty()){
+        if (noteTitle == null || noteTitle.isEmpty()) {
             binding.titleET.setError("Title is required");
             return;
         }
@@ -63,18 +87,41 @@ public class NotesDetails extends AppCompatActivity {
         saveNoteToFirebase(noteModel);
     }
 
-    void saveNoteToFirebase(NoteModel noteModel){
+    void saveNoteToFirebase(NoteModel noteModel) {
         changeInProgress(true);
-        documentReference = Utility.getCollectionReferenceForNotes().document();
+        if (isEditMode) {
+            // update the note
+            documentReference = Utility.getCollectionReferenceForNotes().document(docId);
+        } else {
+            // create new note
+            documentReference = Utility.getCollectionReferenceForNotes().document();
+        }
         documentReference.set(noteModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 changeInProgress(false);
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Toast.makeText(NotesDetails.this, "Note added successfully", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     Toast.makeText(NotesDetails.this, "Failed while adding note", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void deleteNoteFromFirebase() {
+        changeInProgress(true);
+        documentReference = Utility.getCollectionReferenceForNotes().document(docId);
+        documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                changeInProgress(false);
+                if (task.isSuccessful()) {
+                    Toast.makeText(NotesDetails.this, "Note deleted successfully", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(NotesDetails.this, "Failed while deleting note", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -52,21 +52,17 @@ public class CreateAccount extends AppCompatActivity {
     private void createAccountInFirebase(String email, String password) {
         changeInProgress(true);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(CreateAccount.this,
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        changeInProgress(false);
-                        if (task.isSuccessful()) {
-                            Toast.makeText(CreateAccount.this, "Successfully create account, Check email to verify", Toast.LENGTH_SHORT).show();
-                            firebaseAuth.getCurrentUser().sendEmailVerification();
-                            firebaseAuth.signOut();
-                            finish();
-                        } else {
-                            Toast.makeText(CreateAccount.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(CreateAccount.this, task -> {
+            changeInProgress(false);
+            if (task.isSuccessful()) {
+                Toast.makeText(CreateAccount.this, "Successfully create account, Check email to verify", Toast.LENGTH_SHORT).show();
+                firebaseAuth.getCurrentUser().sendEmailVerification();
+                firebaseAuth.signOut();
+                finish();
+            } else {
+                Toast.makeText(CreateAccount.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     void changeInProgress(boolean inProgress) {
