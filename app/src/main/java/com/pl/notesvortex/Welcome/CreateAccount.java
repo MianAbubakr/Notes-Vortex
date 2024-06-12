@@ -2,12 +2,19 @@ package com.pl.notesvortex.Welcome;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
+import com.pl.notesvortex.R;
 import com.pl.notesvortex.databinding.ActivityCreateAccountBinding;
 
 public class CreateAccount extends AppCompatActivity {
@@ -22,7 +29,13 @@ public class CreateAccount extends AppCompatActivity {
         setListener();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setListener() {
+        binding.rootCreateAccount.setOnTouchListener((v, event) -> {
+            hideSoftKeyboard(CreateAccount.this, binding.emailET);
+            return false;
+        });
+
         binding.textViewLogin.setOnClickListener(v -> {
             Intent intent = new Intent(CreateAccount.this, Login.class);
             startActivity(intent);
@@ -41,6 +54,54 @@ public class CreateAccount extends AppCompatActivity {
 
             createAccountInFirebase(email, password);
         });
+
+        binding.passwordEt.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (binding.passwordEt.getRight() - binding.passwordEt.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    // Toggle password visibility
+                    int inputType = binding.passwordEt.getInputType();
+                    if (inputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                        binding.passwordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        binding.passwordEt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide, 0);
+                    } else {
+                        binding.passwordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        binding.passwordEt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide, 0);
+                    }
+                    binding.passwordEt.setSelection(binding.passwordEt.getText().length()); // Maintain cursor position
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        binding.confirmPasswordET.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
+
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (binding.confirmPasswordET.getRight() - binding.confirmPasswordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    // Toggle password visibility
+                    int inputType = binding.confirmPasswordET.getInputType();
+                    if (inputType == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                        binding.confirmPasswordET.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        binding.confirmPasswordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide, 0);
+                    } else {
+                        binding.confirmPasswordET.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        binding.confirmPasswordET.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide, 0);
+                    }
+                    binding.confirmPasswordET.setSelection(binding.confirmPasswordET.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
+    public void hideSoftKeyboard(Context context, EditText editText) {
+        editText.clearFocus();
+        InputMethodManager in = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
     private void createAccountInFirebase(String email, String password) {

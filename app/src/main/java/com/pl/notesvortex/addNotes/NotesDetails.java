@@ -1,7 +1,11 @@
 package com.pl.notesvortex.addNotes;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -21,6 +25,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.pl.notesvortex.R;
 import com.pl.notesvortex.Utility;
+import com.pl.notesvortex.Welcome.Login;
 import com.pl.notesvortex.addNotes.model.NoteModel;
 import com.pl.notesvortex.databinding.ActivityNotesDetailsBinding;
 
@@ -62,7 +67,13 @@ public class NotesDetails extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setListener() {
+        binding.main.setOnTouchListener((v, event) -> {
+            hideSoftKeyboard(NotesDetails.this, binding.titleET);
+            return false;
+        });
+
         binding.backIcon.setOnClickListener(v -> {
             onBackPressed();
         });
@@ -74,6 +85,12 @@ public class NotesDetails extends AppCompatActivity {
         binding.deleteNoteButton.setOnClickListener(v -> {
             deleteNoteFromFirebase();
         });
+    }
+
+    public void hideSoftKeyboard(Context context, EditText editText) {
+        editText.clearFocus();
+        InputMethodManager in = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
     private void saveNote() {
